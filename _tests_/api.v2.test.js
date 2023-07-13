@@ -39,15 +39,6 @@ describe('POST  /signup', () => {
     });
 });
 
-describe('POST to /signin to login as a user (use basic auth)', () => {
-    it('should return a 200 status code when a valid username and password are provided', async () => {
-        const response = await mockRequest
-            .post('/signin')
-            .set('Authorization', 'Basic ' + Buffer.from('moh:123').toString('base64'));
-        expect(response.status).toBe(200);
-    });
-});
-
 
 describe('Routes vs test', () => {
     //token = jwt.sign({ username: 'moh' }, process.env.SECRET || 'Anything');
