@@ -21,9 +21,23 @@ afterAll(async done => {
     done();
 })
 
-let token;
+let token
+describe('POST  /signup', () => {
+    it('should return a 201 status code', async () => {
+        const response = await mockRequest
+            .post('/signup')
+            .send({
+                "username": "ss",
+                "password": "123",
+                "role": "admin"
+            });
+        token = response.body.token;
+        expect(response.statusCode).toBe(201);
+
+    });
+});
+
 describe('GET /secret', () => {
-    token = jwt.sign({ username: 'moh' }, process.env.SECRET || 'Anything');
     it('should return a 200 status code', async () => {
         const response = await mockRequest.get('/secret').set({ authorization: `Bearer ${token}` });
         expect(response.statusCode).toBe(200);
