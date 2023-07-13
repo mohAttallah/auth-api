@@ -1,5 +1,7 @@
 'use strict';
 
+process.env.SECRET = "Anything";
+
 const { server } = require('../src/server');
 // Server containe the app from the server.js
 require('dotenv').config();
@@ -19,9 +21,36 @@ afterAll(async done => {
     await db.drop();
     done();
 })
-    let token
+
+let token
+
+describe('POST  /signup', () => {
+    it('should return a 201 status code', async () => {
+        const response = await mockRequest
+            .post('/signup')
+            .send({
+                "username": "ss",
+                "password": "123",
+                "role": "admin"
+            });
+        token = response.body.token;
+        expect(response.statusCode).toBe(201);
+        
+    });
+});
+
+describe('POST to /signin to login as a user (use basic auth)', () => {
+    it('should return a 200 status code when a valid username and password are provided', async () => {
+        const response = await mockRequest
+            .post('/signin')
+            .set('Authorization', 'Basic ' + Buffer.from('moh:123').toString('base64'));
+        expect(response.status).toBe(200);
+    });
+});
+
+
 describe('Routes vs test', () => {
-    token = jwt.sign({ username: 'moh' }, process.env.SECRET || 'Anything');
+    //token = jwt.sign({ username: 'moh' }, process.env.SECRET || 'Anything');
 
     it(' create a record ', async () => {
         const data = {
