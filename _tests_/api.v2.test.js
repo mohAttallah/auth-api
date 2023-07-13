@@ -19,9 +19,9 @@ afterAll(async done => {
     await db.drop();
     done();
 })
-
+    let token
 describe('Routes vs test', () => {
-    const token = jwt.sign({ username: 'moh' }, process.env.SECRET || 'Anything');
+    token = jwt.sign({ username: 'moh' }, process.env.SECRET || 'Anything');
 
     it(' create a record ', async () => {
         const data = {

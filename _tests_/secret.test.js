@@ -21,9 +21,9 @@ afterAll(async done => {
     done();
 })
 
-
+let token;
 describe('GET /secret', () => {
-    const token = jwt.sign({ username: 'moh' }, process.env.SECRET || 'Anything');
+    token = jwt.sign({ username: 'moh' }, process.env.SECRET || 'Anything');
     it('should return a 200 status code', async () => {
         const response = await mockRequest.get('/secret').set({ authorization: `Bearer ${token}` });
         expect(response.statusCode).toBe(200);
