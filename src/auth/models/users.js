@@ -14,10 +14,18 @@ const userModel = (sequelize, DataTypes) => {
         token: {
             type: DataTypes.VIRTUAL,
             get() {
+                
                 return jwt.sign({ username: this.username }, SECRET);
             },
             set(tokenObj) {
-                let token = jwt.sign(tokenObj, SECRET);
+                console.log(tokenObj, " sssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
+                const payload = {
+                    tokenObj: tokenObj,
+                    role: this.role
+                };
+                console.log(payload, " sssssssssssssssssssssssssssssssssssssssssssssssssssssssss")
+
+                let token = jwt.sign(payload, SECRET, this.role);
                 return token;
             }
         },
@@ -39,7 +47,7 @@ const userModel = (sequelize, DataTypes) => {
         let hashedPass = await bcrypt.hash(user.password, 10);
         user.password = hashedPass;
     });
-  // Basic AUTH: Validating strings (username, password) 
+    // Basic AUTH: Validating strings (username, password) 
 
     model.authenticateBasic = async function (username, password) {
         console.log(username, password)
@@ -48,7 +56,7 @@ const userModel = (sequelize, DataTypes) => {
         if (valid) { return user; }
         throw new Error('Invalid User');
     };
-  // Bearer AUTH: Validating a token
+    // Bearer AUTH: Validating a token
 
     model.authenticateToken = async function (token) {
         try {
