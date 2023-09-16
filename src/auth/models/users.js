@@ -1,5 +1,5 @@
 'use strict';
-//todo model
+//add todo model
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
