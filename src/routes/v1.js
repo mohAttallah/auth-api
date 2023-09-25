@@ -21,6 +21,8 @@ router.post('/:model', handleCreate);
 router.put('/:model/:id', handleUpdate);
 router.delete('/:model/:id', handleDelete);
 
+
+
 async function handleGetAll(req, res, next) {
     try {
         let allRecords = await req.model.get();
@@ -80,6 +82,7 @@ async function handleDelete(req, res, next) {
         next(err);
     }
 }
+
 
 
 module.exports = router;

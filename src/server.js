@@ -8,6 +8,7 @@ const logger = require('./middleware/logger.js');
 
 const v1Routes = require('./routes/v1.js');
 const v2Routes = require('./routes/v2.js');
+const storeRoute = require('./routes/storeRoute')
 const authRoutes = require('./auth/routes');
 
 const app = express();
@@ -24,7 +25,7 @@ app.get("/", (req, res) => {
 app.use('/api/v1', v1Routes);
 app.use('/api/v2', v2Routes);
 app.use(authRoutes);
-
+app.use(storeRoute);
 
 
 app.use('*', notFoundHandler);
